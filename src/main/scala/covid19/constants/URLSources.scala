@@ -4,12 +4,12 @@ object URLSources {
   //Source: INE
 
   //Dataset: Viajeros y pernoctaciones por comunidades autónomas y provincias
-  val HOTELCA = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/2074.csv"
+  val HOTELESP = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/2074.csv"
 
   //Dataset: Total de viajeros por tipo, medio de transporte (terrestre, aéreo y maritimo) y distancia
-  val TRANSPORTECA = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
+  val TRANSPORTESP = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
 
-  val getSources: List[String] = List(HOTELCA)
+  val getINESource: List[String] = List(HOTELESP,TRANSPORTESP)
 
 }
 
