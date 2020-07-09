@@ -9,7 +9,7 @@ object URLSources {
   //Dataset: Total de viajeros por tipo, medio de transporte (terrestre, aéreo y maritimo) y distancia
   val TRANSPORTECA = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
 
-  val getSources: List[String] = List(HOTELCA, TRANSPORTECA)
+  val getSources: List[String] = List(HOTELCA)
 
 }
 
