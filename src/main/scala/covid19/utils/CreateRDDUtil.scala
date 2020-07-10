@@ -10,6 +10,8 @@ object CreateRDDUtil {
 
   val spark: SparkSession = CreateSparkSession.spark
 
+  //INE
+
   def createDFHotelESP(records: List[List[String]] ): DataFrame = {
     val recordsRDD: RDD[CaseClassesUtil.HotelesESP] = spark.sparkContext.parallelize(records) //se convierte en RDD
       .map(register => CaseClassesUtil.HotelesESP(
