@@ -10,11 +10,13 @@ import scala.util.Try
 
 object ReadData {
 
-  val hotelSourceEsp: String = URLSources.HOTELESP
+  val hotelSourceEsp: String = URLSources.TURISMOESP
   val transpSourceEsp: String = URLSources.TRANSPORTESP
+  val tipoHotelSource = URLSources.TIPOSHOTEL
 
   val readSource: List[(DataFrame, String)] = URLSources.getINESource map {
-    case x if x == hotelSourceEsp => ReadINESources.readINE(x, Constants.HOTELDFNAME)
+    case x if x == hotelSourceEsp => ReadINESources.readINE(x, Constants.TURISMODFNAME)
+    case x if x == tipoHotelSource => ReadINESources.readINE(x, Constants.TIPOTURISMODFNAME)
     case x if x == transpSourceEsp => ReadINESources.readINE(x, Constants.TRANSPDFNAME)
   }
 

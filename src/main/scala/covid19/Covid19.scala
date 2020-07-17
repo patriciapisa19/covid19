@@ -7,6 +7,7 @@ import org.apache.spark.sql.DataFrame
 import org.elasticsearch.spark.sql._
 
 import scala.collection.JavaConverters._
+import org.apache.spark.sql.functions._
 
 
 object Covid19 extends App {
@@ -16,15 +17,25 @@ object Covid19 extends App {
   //ineSourceData.map(x => x._1.show(20))
   val hotelesDF = ineSourceData.head._1
   val hotelIndex = ineSourceData.head._2
-  val tansporteDF = ineSourceData(1)._1
-  val transporteIndex = ineSourceData(1)._2
+  val tansporteDF = ineSourceData(2)._1
+  val transporteIndex = ineSourceData(2)._2
 
   val hotelesCleanedDF = CleanData.hotelesData(hotelesDF)
   val transpCleanedDF = CleanData.transporteData(tansporteDF)
-  //hotelesCleanedDF.saveToEs("hotelIndex")
 
-  hotelesCleanedDF.show(20, false)
-  transpCleanedDF.show(20, false)
+//  hotelesCleanedDF.show(20, false)
+//  transpCleanedDF.show(20, false)
+
+  val tipoHotelDF = ineSourceData(1)._1
+  val tipoHotelIndex = ineSourceData(1)._2
+  val tipohotelesCleanedDF = CleanData.tipoHotelData(tipoHotelDF)
+
+  tipohotelesCleanedDF.filter(col("tipo_estancia") contains  "Cam")
+    .filter(col("provincia") contains  "Astu").show(20, false)
+
+//  hotelesCleanedDF.saveToEs(hotelIndex)
+//  transpCleanedDF.saveToEs(transporteIndex)
+
 
 
 

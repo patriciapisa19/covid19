@@ -15,9 +15,13 @@ object ReadINESources {
     var dataDF: DataFrame = null
     var index: String = null
 
-    if (dfName == Constants.HOTELDFNAME) {
+    if (dfName == Constants.TURISMODFNAME) {
       dataDF = CreateRDDUtil.createDFHotelESP(records)
-      index = Constants.HOTELESPINDEX
+      index = Constants.TURIMOESPINDEX
+      return (dataDF,index)
+    }
+    if (dfName == Constants.TIPOTURISMODFNAME) {
+      dataDF = CreateRDDUtil.createDFTipoHotelESP(records)
       return (dataDF,index)
     }
     if (dfName == Constants.TRANSPDFNAME) {

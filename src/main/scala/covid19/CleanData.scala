@@ -8,11 +8,28 @@ object CleanData {
 
   def hotelesData (hotelesDF: DataFrame): DataFrame = {
 
-    val provinciasDF = hotelesDF
-      //.filter(col("com_aut_prov") contains  "La")
-      .withColumn("provincia",
-        when(col("com_aut_prov").startsWith("T"), "00 Total Nacional")
-          otherwise(col("com_aut_prov")))
+    convertProvincia(convertPeriod(hotelesDF))
+
+  }
+
+  def transporteData (transpsDF: DataFrame): DataFrame = {
+    convertPeriod(transpsDF)
+
+
+  }
+
+  def tipoHotelData (tipoHotelDF: DataFrame): DataFrame = {
+    convertProvincia(convertPeriod(tipoHotelDF))
+      .withColumn("tipo_estancia", when(col("tipo_estancia") contains "Hotelera", "Hoteles")
+      .when(col("tipo_estancia") contains "Campings", "Campings")
+      .when(col("tipo_estancia") contains "Rural", "Turismo Rural")
+      .when(col("tipo_estancia") contains "Apartamentos", "Apartamentos Turísticos"))
+  }
+
+  def convertProvincia(df: DataFrame) = {
+    df.withColumn("provincia",
+      when(col("com_aut_prov").startsWith("T"), "00 Total Nacional")
+        otherwise(col("com_aut_prov")))
       .withColumn("provincia", expr("substring(provincia,4,length(com_aut_prov))"))
       .withColumn("provinciaAux",
         when(col("provincia") contains(","), split(col("provincia")," ")(0))
@@ -24,15 +41,6 @@ object CleanData {
       .withColumn("provincia", concat_ws(" ", col("provincia"),col("provinciaAux")))
       .drop("provinciaAux")
       .drop("com_aut_prov")
-
-    val periodoDF: DataFrame = convertPeriod(provinciasDF)
-
-    //periodoDF.show(20, false)
-    periodoDF
-  }
-
-  def transporteData (transpsDF: DataFrame): DataFrame = {
-    convertPeriod(transpsDF)
   }
 
   def convertPeriod(df: DataFrame) : DataFrame = {

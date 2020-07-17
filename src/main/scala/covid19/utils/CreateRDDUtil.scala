@@ -25,6 +25,20 @@ object CreateRDDUtil {
 
   }
 
+  def createDFTipoHotelESP(records: List[List[String]] ): DataFrame = {
+    val recordsRDD: RDD[CaseClassesUtil.TiposHotelESP] = spark.sparkContext.parallelize(records) //se convierte en RDD
+      .map(register => CaseClassesUtil.TiposHotelESP(
+        Try(register.head).getOrElse("null"),
+        Try(register(1)).getOrElse("null"),
+        Try(register(2)).getOrElse("null"),
+        Try(register(3)).getOrElse("null"),
+        Try(register(4)).getOrElse("null"),
+        Try(register(5)).getOrElse("null")
+      ))
+    spark.sqlContext.createDataFrame(recordsRDD)
+
+  }
+
   def createDFTranspESP(records: List[List[String]]): DataFrame = {
     val recordsRDD: RDD[CaseClassesUtil.TransporteESP] = spark.sparkContext.parallelize(records) //se convierte en RDD
       .map(register => CaseClassesUtil.TransporteESP(
