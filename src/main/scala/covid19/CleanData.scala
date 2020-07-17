@@ -8,7 +8,8 @@ object CleanData {
 
   def hotelesData (hotelesDF: DataFrame): DataFrame = {
 
-    val provinciasDF = hotelesDF.filter(col("com_aut_prov") contains  "La")
+    val provinciasDF = hotelesDF
+      //.filter(col("com_aut_prov") contains  "La")
       .withColumn("provincia",
         when(col("com_aut_prov").startsWith("T"), "00 Total Nacional")
           otherwise(col("com_aut_prov")))
@@ -24,14 +25,22 @@ object CleanData {
       .drop("provinciaAux")
       .drop("com_aut_prov")
 
+    val periodoDF: DataFrame = convertPeriod(provinciasDF)
 
-
-    val periodoDF = provinciasDF.withColumn("periodo2", split(col("periodo"),"M"))
-      .selectExpr("provincia","viajeros_penoct","residencia","total","periodo2[1]", "periodo2[0]")
-      .withColumnRenamed("periodo2[0]", "year")
-      .withColumnRenamed("periodo2[1]", "month")
-
+    //periodoDF.show(20, false)
     periodoDF
+  }
+
+  def transporteData (transpsDF: DataFrame): DataFrame = {
+    convertPeriod(transpsDF)
+  }
+
+  def convertPeriod(df: DataFrame) : DataFrame = {
+    df.withColumn("periodo", split(col("periodo"),"M"))
+      .withColumn("year",col("periodo")(0))
+      .withColumn("month",col("periodo")(1))
+      .drop("periodo")
+
   }
 
 }
