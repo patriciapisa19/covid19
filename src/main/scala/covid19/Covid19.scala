@@ -3,6 +3,7 @@ package covid19
 import java.io
 
 import covid19.constants.URLSources
+import covid19.utils.ProviCAUtils
 import org.apache.spark.sql.DataFrame
 import org.elasticsearch.spark.sql._
 
@@ -30,11 +31,18 @@ object Covid19 extends App {
   val tipoHotelIndex = ineSourceData(1)._2
   val tipohotelesCleanedDF = CleanData.tipoHotelData(tipoHotelDF)
 
-  tipohotelesCleanedDF.filter(col("tipo_estancia") contains  "Cam")
-    .filter(col("provincia") contains  "Astu").show(20, false)
+  tipohotelesCleanedDF
+//    .filter(col("tipo_estancia") contains  "Cam")
+//    .filter(col("provincia") contains  "Astu")
+//    .filter(col("year") equalTo   "2020")
+//    .filter(col("month") equalTo "05")
+//    .show(20, false)
 
 //  hotelesCleanedDF.saveToEs(hotelIndex)
 //  transpCleanedDF.saveToEs(transporteIndex)
+
+  val provCADF = ProviCAUtils.provCADF
+  provCADF.show(53, false)
 
 
 

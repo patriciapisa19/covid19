@@ -1,0 +1,53 @@
+iso_prov,provincia,iso_ccaa
+C,La Coruña,GA
+VI,Álava,PV
+AB,Albacete,CM
+A,Alicante,VC
+AL,Almería,AN
+O,Asturias,AS
+AV,Ávila,CL
+BA,Badajoz,EX
+PM,Baleares,IB
+B,Barcelona,CT
+BI,Vizcaya,PV
+BU,Burgos,CL
+CC,Cáceres,EX
+CA,Cádiz,AN
+S,Cantabria,CB
+CS,Castellón,VC
+CR,Ciudad Real,CM
+CO,Córdoba,AN
+CU,Cuenca,CM
+SS,Guipúzcoa,PV
+GI,Gerona,CT
+GR,Granada,AN
+GU,Guadalajara,CM
+H,Huelva,AN
+HU,Huesca,AR
+J,Jaén,AN
+LO,La Rioja,RI
+GC,Las Palmas,CN
+LE,León,CL
+L,Lérida,CT
+LU,Lugo,GA
+M,Madrid,MD
+MA,Málaga,AN
+MU,Murcia,MC
+NA,Navarra,NC
+OR,Orense,GA
+P,Palencia,CL
+PO,Pontevedra,GA
+SA,Salamanca,CL
+TF,Santa Cruz de Tenerife,CN
+SG,Segovia,CL
+SE,Sevilla,AN
+SO,Soria,CL
+T,Tarragona,CT
+TE,Teruel,AR
+TO,Toledo,CM
+V,Valencia,VC
+VA,Valladolid,CL
+ZA,Zamora,CL
+Z,Zaragoza,AR
+CE,Ceuta
+ML,Melilla
