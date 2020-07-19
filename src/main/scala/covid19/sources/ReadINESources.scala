@@ -29,6 +29,11 @@ object ReadINESources {
       index = Constants.TRANSPESPINDEX
       return (dataDF,index)
     }
+    if (dfName == Constants.MUERTESPNAME) {
+      dataDF = CreateRDDUtil.createDFMuertesESP(records)
+      index = Constants.MUERTESPINDEX
+      return (dataDF,index)
+    }
     return (dataDF,index)
 
   }

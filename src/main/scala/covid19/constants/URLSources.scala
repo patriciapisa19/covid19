@@ -12,7 +12,11 @@ object URLSources {
   //Dataset: Total de viajeros por tipo, medio de transporte (terrestre, aéreo y maritimo) y distancia
   val TRANSPORTESP = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
 
-  val getINESource: List[String] = List(TURISMOESP,TIPOSHOTEL,TRANSPORTESP)
+  val MUERTESP = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/36166.csv"
 
+  val getINESource: List[String] = List(TURISMOESP,TIPOSHOTEL,TRANSPORTESP,MUERTESP)
+
+  //Source: ??
+  val CASOSPROV = "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
 }
 

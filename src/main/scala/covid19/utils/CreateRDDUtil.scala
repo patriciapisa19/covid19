@@ -48,7 +48,19 @@ object CreateRDDUtil {
         Try(register(3)).getOrElse("null")
       ))
     spark.sqlContext.createDataFrame(recordsRDD)
+  }
 
+    def createDFMuertesESP(records: List[List[String]]): DataFrame = {
+      val recordsRDD: RDD[CaseClassesUtil.MuertesESP] = spark.sparkContext.parallelize(records) //se convierte en RDD
+        .map(register => CaseClassesUtil.MuertesESP(
+          Try(register.head).getOrElse("null"),
+          Try(register(1)).getOrElse("null"),
+          Try(register(2)).getOrElse("null"),
+          Try(register(3)).getOrElse("null"),
+          Try(register(4)).getOrElse("null"),
+          Try(register(5)).getOrElse("null")
+        ))
+      spark.sqlContext.createDataFrame(recordsRDD)
   }
 
 

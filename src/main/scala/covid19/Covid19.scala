@@ -31,7 +31,7 @@ object Covid19 extends App {
   val tipoHotelIndex = ineSourceData(1)._2
   val tipohotelesCleanedDF = CleanData.tipoHotelData(tipoHotelDF)
 
-  tipohotelesCleanedDF
+//tipohotelesCleanedDF
 //    .filter(col("tipo_estancia") contains  "Cam")
 //    .filter(col("provincia") contains  "Astu")
 //    .filter(col("year") equalTo   "2020")
@@ -41,8 +41,15 @@ object Covid19 extends App {
 //  hotelesCleanedDF.saveToEs(hotelIndex)
 //  transpCleanedDF.saveToEs(transporteIndex)
 
-  val provCADF = ProviCAUtils.provCADF
-  provCADF.show(53, false)
+  val muertesESPDF = ineSourceData(3)._1
+  val muertesESPIndex = ineSourceData(3)._2
+
+  val muertesDF = CleanData.muertesEspData(muertesESPDF)
+
+
+  val provCADF = ProviCAUtils.provCADF //codigos CA y provincias
+
+
 
 
 

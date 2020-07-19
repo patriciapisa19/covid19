@@ -9,5 +9,7 @@ object CaseClassesUtil{
 
   case class TransporteESP(tipo_transp: String, viajeros_tasas: String, periodo: String, total: String)
 
+  case class MuertesESP (provincia: String, sexo: String, edad: String, tipo_dato:String, periodo: String, total: String)
+
 
 }
