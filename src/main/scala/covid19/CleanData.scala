@@ -3,16 +3,17 @@ package covid19
 import covid19.utils.CaseClassesUtil.MuertesESP
 import org.apache.spark.sql.{Column, DataFrame}
 import org.apache.spark.sql.catalyst.expressions.{Expression, StringSplit}
-import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when}
+import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when,trim}
 
 object CleanData {
 
-  def hotelesData (hotelesDF: DataFrame): Unit = {
+  def hotelesData (hotelesDF: DataFrame): DataFrame = {
 
     val hotelesRDF = hotelesDF.withColumnRenamed("com_aut_prov","provincia")
     convertProvincia(convertPeriodMes(hotelesRDF))
-      .filter(col("provincia") contains  "Bal")
-      .show(20, false)
+      .filter(col("provincia") contains  "Val")
+
+    //.show(20, false)
 
   }
 
@@ -21,21 +22,21 @@ object CleanData {
 
   }
 
-  def tipoHotelData (tipoHotelDF: DataFrame): Unit = {
+  def tipoHotelData (tipoHotelDF: DataFrame): DataFrame = {
     val tipoHotelRDF = tipoHotelDF.withColumnRenamed("com_aut_prov","provincia")
     convertProvincia(convertPeriodMes(tipoHotelRDF))
       .withColumn("tipo_estancia", when(col("tipo_estancia") contains "Hotelera", "Hoteles")
       .when(col("tipo_estancia") contains "Campings", "Campings")
       .when(col("tipo_estancia") contains "Rural", "Turismo Rural")
       .when(col("tipo_estancia") contains "Apartamentos", "Apartamentos Turísticos"))
-      .filter(col("provincia") contains  "Bal")
-      .show(20, false)
+      //.filter(col("provincia") contains  "Val")
+      //.show(20, false)
   }
 
-  def muertesEspData (muertesESPDF: DataFrame): Unit = {
+  def muertesEspData (muertesESPDF: DataFrame): DataFrame = {
     convertProvincia(convertPeriodSemana(muertesESPDF))
-      .filter(col("provincia") contains  "Bal")
-      .show(20, false)
+      .filter(col("provincia") contains  "Barcelona")
+
 
   }
 
@@ -53,7 +54,9 @@ object CleanData {
         when(col("provincia") contains ",", (split(col("provincia"),", ")(1)))
           otherwise(col("provincia")))
       .withColumn("provincia", concat_ws(" ", col("provincia"),col("provinciaAux")))
+      .withColumn("provincia", trim(col("provincia")))
       .drop("provinciaAux")
+
   }
 
   def convertPeriodMes(df: DataFrame) : DataFrame = {

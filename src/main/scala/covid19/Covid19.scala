@@ -44,10 +44,14 @@ object Covid19 extends App {
   val muertesESPDF = ineSourceData(3)._1
   val muertesESPIndex = ineSourceData(3)._2
 
-  val muertesDF = CleanData.muertesEspData(muertesESPDF)
+  val muertesDF: DataFrame = CleanData.muertesEspData(muertesESPDF)
+  muertesDF.show(50, false)
+
+  val provCADF: DataFrame = ProviCAUtils.provCADF //codigos CA y provincias
+  provCADF.show(50, false)
 
 
-  val provCADF = ProviCAUtils.provCADF //codigos CA y provincias
+  muertesDF.join(provCADF,"provincia").show(20,false)
 
 
 

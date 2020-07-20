@@ -1,18 +1,18 @@
-iso_ccaa,ccaa
-AN,Andalucía
-AR,Aragón
-AS,Principado deAsturias
-CN,Canarias
-CB,Cantabria
-CM,Castilla-La Mancha
-CL,Castilla y León
-CT,Cataluña
-EX,Extremadura
-GA,Galicia
-IB,Islas Baleares
-RI,La Rioja
-MD,Comunidad de Madrid
-MC,Región de Murcia
-NC,Comunidad Foral Navarra
-PV,País Vasco
-VC,Comunidad Valenciana
+iso_ccaa;ccaa;coord_geo_ca
+AN;Andalucía;{"latitud":37.38283,"longitud":-5.97317}
+AR;Aragón;{"latitud":41.65606,"longitud":-0.87734}
+AS;Principado de Asturias;{"latitud":43.36029,"longitud":-5.84476}
+CN;Canarias;{"latitud":28.46824,"longitud":-16.25462}
+CB;Cantabria;{"latitud":43.46472,"longitud":-3.80444}
+CM;Castilla-La Mancha;{"latitud":40.06667,"longitud":-2.13333}
+CL;Castilla y León;{"latitud":41.65518,"longitud":-4.72372}
+CT;Cataluña;{"latitud":41.38879,"longitud":2.15899}
+EX;Extremadura;{"latitud":38.87789,"longitud":-6.97061}
+GA;Galicia;{"latitud":43.37135,"longitud":-8.396}
+IB;Islas Baleares;{"latitud":39.56939,"longitud":2.65024}
+RI;La Rioja;{"latitud":42.46667,"longitud":-2.45}
+MD;Comunidad de Madrid;{"latitud":40.4165,"longitud":-3.70256}
+MC;Región de Murcia;{"latitud":37.98704,"longitud":-1.13004}
+NC;Comunidad Foral Navarra;{"latitud":42.81687,"longitud":-1.64323}
+PV;País Vasco;{"latitud":42.84998,"longitud":-2.67268}
+VC;Comunidad Valenciana;{"latitud":39.46975,"longitud":-0.37739}
