@@ -1,18 +1,20 @@
 iso_ccaa;ccaa;coord_geo_ca
-AN;Andalucía;{"latitud":37.38283,"longitud":-5.97317}
-AR;Aragón;{"latitud":41.65606,"longitud":-0.87734}
-AS;Principado de Asturias;{"latitud":43.36029,"longitud":-5.84476}
-CN;Canarias;{"latitud":28.46824,"longitud":-16.25462}
-CB;Cantabria;{"latitud":43.46472,"longitud":-3.80444}
-CM;Castilla-La Mancha;{"latitud":40.06667,"longitud":-2.13333}
-CL;Castilla y León;{"latitud":41.65518,"longitud":-4.72372}
-CT;Cataluña;{"latitud":41.38879,"longitud":2.15899}
-EX;Extremadura;{"latitud":38.87789,"longitud":-6.97061}
-GA;Galicia;{"latitud":43.37135,"longitud":-8.396}
-IB;Islas Baleares;{"latitud":39.56939,"longitud":2.65024}
-RI;La Rioja;{"latitud":42.46667,"longitud":-2.45}
-MD;Comunidad de Madrid;{"latitud":40.4165,"longitud":-3.70256}
-MC;Región de Murcia;{"latitud":37.98704,"longitud":-1.13004}
-NC;Comunidad Foral Navarra;{"latitud":42.81687,"longitud":-1.64323}
-PV;País Vasco;{"latitud":42.84998,"longitud":-2.67268}
-VC;Comunidad Valenciana;{"latitud":39.46975,"longitud":-0.37739}
+AN;Andalucía;"37.38283,-5.97317"
+AR;Aragón;"41.65606,-0.87734"
+AS;Principado de Asturias;"43.36029,-5.84476"
+CN;Canarias;"28.46824,-16.25462"
+CB;Cantabria;"43.46472,-3.80444"
+CM;Castilla-La Mancha;"40.06667,-2.13333"
+CL;Castilla y León;"41.65518,-4.72372"
+CT;Cataluña;"41.38879,2.15899"
+EX;Extremadura;"38.87789,-6.97061"
+GA;Galicia;"43.37135,-8.396"
+IB;Islas Baleares;"39.56939,2.65024"
+RI;La Rioja;"42.46667,-2.45"
+MD;Comunidad de Madrid;"40.4165,-3.70256"
+MC;Región de Murcia;"37.98704,-1.13004"
+NC;Comunidad Foral Navarra;"42.81687,-1.64323"
+PV;País Vasco;"42.84998,-2.67268"
+VC;Comunidad Valenciana;"39.46975,-0.37739"
+CE;Ceuta;"35.88919,-5.32042"
+ML;Melilla;"35.29369,-2.93833"

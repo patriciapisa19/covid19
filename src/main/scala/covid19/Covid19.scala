@@ -51,7 +51,10 @@ object Covid19 extends App {
   provCADF.show(50, false)
 
 
-  muertesDF.join(provCADF,"provincia").show(20,false)
+  val dfToElastic: DataFrame = muertesDF.join(provCADF,"provincia")
+  dfToElastic.printSchema()
+  //dfToElastic.groupBy("provincia").agg(sum("total"))show(2000, false)
+  dfToElastic.saveToEs("muertes_spain")
 
 
 

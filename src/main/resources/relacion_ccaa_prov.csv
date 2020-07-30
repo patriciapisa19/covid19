@@ -1,53 +1,53 @@
 iso_prov;provincia;iso_ccaa;coord_geo_prov
-C;La Coruña;GA;{"latitud":43.37135,"longitud":-8.396}
-VI;Álava;PV;{"latitud":42.84998,"longitud":-2.67268}
-AB;Albacete;CM;{"latitud":38.99424,"longitud":-1.85643}
-A;Alicante;VC;{"latitud":38.34517,"longitud":-0.48149}
-AL;Almería;AN;{"latitud":36.83814,"longitud":-2.45974}
-O;Oviedo;AS;{"latitud":43.36029,"longitud":-5.84476}
-AV;Ávila;CL;{"latitud":40.65724,"longitud":-4.69951}
-BA;Badajoz;EX;{"latitud":38.87789,"longitud":-6.97061}
-PM;Palma de Mallorca;IB;{"latitud":39.56939,"longitud":2.65024}
-B;Barcelona;CT;{"latitud":41.38879,"longitud":2.15899}
-BI;Vizcaya;PV;{"latitud":43.26271,"longitud":-2.92528}
-BU;Burgos;CL;{"latitud":42.34106,"longitud":-3.70184}
-CC;Cáceres;EX;{"latitud":39.47649,"longitud":-6.37224}
-CA;Cádiz;AN;{"latitud":36.52672,"longitud":-6.2891}
-S;Santander;CB;{"latitud":43.46472,"longitud":-3.80444}
-CS;Castellón;VC;{"latitud":39.98567,"longitud":-0.04935}
-CR;Ciudad Real;CM;{"latitud":38.98626,"longitud":-3.92907}
-CO;Córdoba;AN;{"latitud":37.89155,"longitud":-4.77275}
-CU;Cuenca;CM;{"latitud":40.06667,"longitud":-2.13333}
-SS;Guipúzcoa;PV;{"latitud":43.31283,"longitud":-1.97499}
-GI;Gerona;CT;{"latitud":41.98311,"longitud":2.82493}
-GR;Granada;AN;{"latitud":37.18817,"longitud":-3.60667}
-GU;Guadalajara;CM;{"latitud":40.62862,"longitud":-3.16185}
-H;Huelva;AN;{"latitud":37.26638,"longitud":-6.94004}
-HU;Huesca;AR;{"latitud":42.13615,"longitud":-0.4087}
-J;Jaén;AN;{"latitud":37.76922,"longitud":-3.79028}
-LO;Logroño;RI;{"latitud":42.46667,"longitud":-2.45}
-GC;Las Palmas;CN;{"latitud":28.09973,"longitud":-15.41343}
-LE;León;CL;{"latitud":42.60003,"longitud":-5.57032}
-L;Lérida;CT;{"latitud":41.61674,"longitud":0.62218}
-LU;Lugo;GA;{"latitud":43.00992,"longitud":-7.55602}
-M;Madrid;MD;{"latitud":40.4165,"longitud":-3.70256}
-MA;Málaga;AN;{"latitud":36.72016,"longitud":-4.42034}
-MU;Murcia;MC;{"latitud":37.98704,"longitud":-1.13004}
-NA;Navarra;NC;{"latitud":42.81687,"longitud":-1.64323}
-OR;Orense;GA;{"latitud":42.33669,"longitud":-7.86407}
-P;Palencia;CL;{"latitud":42.00955,"longitud":-4.52406}
-PO;Pontevedra;GA;{"latitud":42.431,"longitud":-8.64435}
-SA;Salamanca;CL;{"latitud":40.96882,"longitud":-5.66388}
-TF;Santa Cruz de Tenerife;CN;{"latitud":28.46824,"longitud":-16.25462}
-SG;Segovia;CL;{"latitud":40.94808,"longitud":-4.11839}
-SE;Sevilla;AN;{"latitud":37.38283,"longitud":-5.97317}
-SO;Soria;CL;{"latitud":41.76401,"longitud":-2.46883}
-T;Tarragona;CT;{"latitud":41.11667,"longitud":1.25}
-TE;Teruel;AR;{"latitud":40.3456,"longitud":-1.10646}
-TO;Toledo;CM;{"latitud":39.8581,"longitud":-4.02263}
-V;Valencia;VC;{"latitud":39.46975,"longitud":-0.37739}
-VA;Valladolid;CL;{"latitud":41.65518,"longitud":-4.72372}
-ZA;Zamora;CL;{"latitud":41.50633,"longitud":-5.74456}
-Z;Zaragoza;AR;{"latitud":41.65606,"longitud":-0.87734}
-CE;Ceuta; {"latitud":35.88919,"longitud":-5.32042}
-ML;Melilla;{"latitud":35.29369,"longitud":-2.93833}
+C;La Coruña;GA;"43.37135,-8.396"
+VI;Álava;PV;"42.84998,-2.67268"
+AB;Albacete;CM;"38.99424,-1.85643"
+A;Alicante;VC;"38.34517,-0.48149"
+AL;Almería;AN;"36.83814,-2.45974"
+O;Oviedo;AS;"43.36029,-5.84476"
+AV;Ávila;CL;"40.65724,-4.69951"
+BA;Badajoz;EX;"38.87789,-6.97061"
+PM;Palma de Mallorca;IB;"39.56939,2.65024"
+B;Barcelona;CT;"41.38879,2.15899"
+BI;Vizcaya;PV;"43.26271,-2.92528"
+BU;Burgos;CL;"42.34106,-3.70184"
+CC;Cáceres;EX;"39.47649,-6.37224"
+CA;Cádiz;AN;"36.52672,-6.2891"
+S;Santander;CB;"43.46472,-3.80444"
+CS;Castellón;VC;"39.98567,-0.04935"
+CR;Ciudad Real;CM;"38.98626,-3.92907"
+CO;Córdoba;AN;"37.89155,-4.77275"
+CU;Cuenca;CM;"40.06667,-2.13333"
+SS;Guipúzcoa;PV;"43.31283,-1.97499"
+GI;Gerona;CT;"41.98311,2.82493"
+GR;Granada;AN;"37.18817,-3.60667"
+GU;Guadalajara;CM;"40.62862,-3.16185"
+H;Huelva;AN;"37.26638,-6.94004"
+HU;Huesca;AR;"42.13615,-0.4087"
+J;Jaén;AN;"37.76922,-3.79028"
+LO;Logroño;RI;"42.46667,-2.45"
+GC;Las Palmas;CN;"28.09973,-15.41343"
+LE;León;CL;"42.60003,-5.57032"
+L;Lérida;CT;"41.61674,0.62218"
+LU;Lugo;GA;"43.00992,-7.55602"
+M;Madrid;MD;"40.4165,-3.70256"
+MA;Málaga;AN;"36.72016,-4.42034"
+MU;Murcia;MC;"37.98704,-1.13004"
+NA;Navarra;NC;"42.81687,-1.64323"
+OR;Orense;GA;"42.33669,-7.86407"
+P;Palencia;CL;"42.00955,-4.52406"
+PO;Pontevedra;GA;"42.431,-8.64435"
+SA;Salamanca;CL;"40.96882,-5.66388"
+TF;Santa Cruz de Tenerife;CN;"28.46824,-16.25462"
+SG;Segovia;CL;"40.94808,-4.11839"
+SE;Sevilla;AN;"37.38283,-5.97317"
+SO;Soria;CL;"41.76401,-2.46883"
+T;Tarragona;CT;"41.11667,1.25"
+TE;Teruel;AR;"40.3456,-1.10646"
+TO;Toledo;CM;"39.8581,-4.02263"
+V;Valencia;VC;"39.46975,-0.37739"
+VA;Valladolid;CL;"41.65518,-4.72372"
+ZA;Zamora;CL;"41.50633,-5.74456"
+Z;Zaragoza;AR;"41.65606,-0.87734"
+CE;Ceuta;CE;"35.88919,-5.32042"
+ML;Melilla;"ML;"35.29369,-2.93833"

@@ -4,6 +4,8 @@ import covid19.utils.CaseClassesUtil.MuertesESP
 import org.apache.spark.sql.{Column, DataFrame}
 import org.apache.spark.sql.catalyst.expressions.{Expression, StringSplit}
 import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when,trim}
+import covid19.utils.CreateRDDUtil.spark
+
 
 object CleanData {
 
@@ -11,7 +13,7 @@ object CleanData {
 
     val hotelesRDF = hotelesDF.withColumnRenamed("com_aut_prov","provincia")
     convertProvincia(convertPeriodMes(hotelesRDF))
-      .filter(col("provincia") contains  "Val")
+     // .filter(col("provincia") contains  "Val")
 
     //.show(20, false)
 
@@ -29,13 +31,30 @@ object CleanData {
       .when(col("tipo_estancia") contains "Campings", "Campings")
       .when(col("tipo_estancia") contains "Rural", "Turismo Rural")
       .when(col("tipo_estancia") contains "Apartamentos", "Apartamentos Turísticos"))
-      //.filter(col("provincia") contains  "Val")
+      .filter(col("provincia") contains  "Val")
       //.show(20, false)
   }
 
   def muertesEspData (muertesESPDF: DataFrame): DataFrame = {
-    convertProvincia(convertPeriodSemana(muertesESPDF))
-      .filter(col("provincia") contains  "Barcelona")
+    convertSemanaMes(convertProvincia(convertPeriodSemana(muertesESPDF)))
+      .withColumn("provincia",
+        when(col("provincia") contains "Álava", "Álava")
+        .when(col("provincia") contains "Alicante", "Alicante")
+        .when(col("provincia") contains "Balear", "Palma de Mallorca")
+        .when(col("provincia") contains "Coruña", "La Coruña")
+        .when(col("provincia") contains "Castellón", "Castellón")
+        .when(col("provincia") contains "Gipuzkoa", "Guipúzcoa")
+        .when(col("provincia") === "Lleida", "Lérida")
+        .when(col("provincia") contains "Valencia", "Valencia")
+        .when(col("provincia") === "Bizkaia", "Vizcaya")
+        .when(col("provincia") === "Asturias", "Oviedo")
+        .when(col("provincia") === "Cantabria", "Santander")
+        .when(col("provincia") contains "Rioja", "Logroño")
+        .when(col("provincia") === "Ourense", "Orense")
+        .when(col("provincia") === "Girona", "Gerona")
+        .otherwise(col("provincia"))
+      )
+      //.filter(col("provincia") contains  "Valencia")
 
 
   }
@@ -72,6 +91,12 @@ object CleanData {
       .withColumn("year",col("periodo")(0))
       .withColumn("week",col("periodo")(1))
       .drop("periodo")
+  }
+
+  def convertSemanaMes (df: DataFrame) = {
+    val semanaMesDF = spark.read.format("csv").option("sep", ";").option("header", "true").load("src/main/resources/relacion_semanas_meses.csv")
+    //semanaMesDF.filter(col("year") === "2020").show(100, false)
+    df.join(semanaMesDF,Seq("year","week"))
   }
 
 }

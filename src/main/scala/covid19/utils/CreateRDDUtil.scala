@@ -19,7 +19,7 @@ object CreateRDDUtil {
         Try(register(1)).getOrElse("null"),
         Try(register(2)).getOrElse("null"),
         Try(register(3)).getOrElse("null"),
-        Try(register(4)).getOrElse("null")
+        Try(register(4).toInt).getOrElse(0)
       ))
      spark.sqlContext.createDataFrame(recordsRDD)
 
@@ -33,7 +33,7 @@ object CreateRDDUtil {
         Try(register(2)).getOrElse("null"),
         Try(register(3)).getOrElse("null"),
         Try(register(4)).getOrElse("null"),
-        Try(register(5)).getOrElse("null")
+        Try(register(5).toInt).getOrElse(0)
       ))
     spark.sqlContext.createDataFrame(recordsRDD)
 
@@ -45,7 +45,7 @@ object CreateRDDUtil {
         Try(register.head).getOrElse("null"),
         Try(register(1)).getOrElse("null"),
         Try(register(2)).getOrElse("null"),
-        Try(register(3)).getOrElse("null")
+        Try(register(3).toInt).getOrElse(0)
       ))
     spark.sqlContext.createDataFrame(recordsRDD)
   }
@@ -58,7 +58,7 @@ object CreateRDDUtil {
           Try(register(2)).getOrElse("null"),
           Try(register(3)).getOrElse("null"),
           Try(register(4)).getOrElse("null"),
-          Try(register(5)).getOrElse("null")
+          Try(register(5).toInt).getOrElse(0)
         ))
       spark.sqlContext.createDataFrame(recordsRDD)
   }
