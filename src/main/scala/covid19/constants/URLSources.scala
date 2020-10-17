@@ -4,7 +4,7 @@ object URLSources {
   //Source: INE
 
   //Dataset: Viajeros y pernoctaciones por comunidades autónomas y provincias
-  val TURISMOESP = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/2074.csv"
+  //val TURISMOESP = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/2074.csv"
 
   //Dataset: Tipos de hoteles
   val TIPOSHOTEL = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/2941.csv?nocab=1"
@@ -14,9 +14,9 @@ object URLSources {
 
   val MUERTESP = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/36166.csv"
 
-  val getINESource: List[String] = List(TURISMOESP,TIPOSHOTEL,TRANSPORTESP,MUERTESP)
+  val getINESource: List[String] = List(TIPOSHOTEL,TRANSPORTESP,MUERTESP)
 
   //Source: ??
-  val CASOSPROV = "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
+  val CASOSPROV = "http://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
 }
 

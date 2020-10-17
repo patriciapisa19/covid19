@@ -3,7 +3,7 @@ package covid19
 import covid19.utils.CaseClassesUtil.MuertesESP
 import org.apache.spark.sql.{Column, DataFrame}
 import org.apache.spark.sql.catalyst.expressions.{Expression, StringSplit}
-import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when,trim}
+import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when,trim,concat,to_date}
 import covid19.utils.CreateRDDUtil.spark
 
 
@@ -54,7 +54,10 @@ object CleanData {
         .when(col("provincia") === "Girona", "Gerona")
         .otherwise(col("provincia"))
       )
-      //.filter(col("provincia") contains  "Valencia")
+      .withColumn("date", concat(col("year"), lit("-"), (col("month_id"))))
+      .withColumn("date",to_date(col("date"),"yyyy-MM"))
+
+    //.filter(col("provincia") contains  "Valencia")
 
 
   }

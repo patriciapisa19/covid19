@@ -1,40 +1,58 @@
 package covid19.sources
 
 import covid19.constants._
-import covid19.utils.{CreateRDDUtil, StringUtils}
+import covid19.utils.CreateRDDUtil.spark
+import covid19.utils._
+import javax.net.ssl.SSLHandshakeException
 import org.apache.spark.sql.DataFrame
+
+import scala.util.control.Exception
 
 object ReadINESources {
 
-
-
-  def readINE(URL: String, dfName: String): (DataFrame, String) = {
-    val html: List[String] = scala.io.Source.fromURL(URL).mkString.split("\n").toList
-    val records: List[List[String]] = html.drop(1).map(fieldName => StringUtils.normalizeString(fieldName)).map(x => x.split(";").toList)
+  def readINE(URL: String, dfName: String,index: String, resource_csv: String): DataFrame = {
 
     var dataDF: DataFrame = null
-    var index: String = null
 
-    if (dfName == Constants.TURISMODFNAME) {
-      dataDF = CreateRDDUtil.createDFHotelESP(records)
-      index = Constants.TURIMOESPINDEX
-      return (dataDF,index)
+    try {
+      val html: List[String] = scala.io.Source.fromURL(URL).mkString.split("\n").toList
+      val records: List[List[String]] = html.drop(1).map(fieldName => StringUtils.normalizeString(fieldName)).map(x => x.split(";").toList)
+      dataDF = dfName match {
+        case Constants.TIPOTURISMODFNAME => CreateRDDUtil.createDFTipoHotelESP(records)
+        case Constants.TRANSPDFNAME => CreateRDDUtil.createDFTranspESP(records)
+        case Constants.MUERTESPNAME => CreateRDDUtil.createDFMuertesESP(records)
+
+      }
+
     }
-    if (dfName == Constants.TIPOTURISMODFNAME) {
-      dataDF = CreateRDDUtil.createDFTipoHotelESP(records)
-      return (dataDF,index)
+    catch {
+      case e: SSLHandshakeException => {
+        println("!!!!!!!!!!!!!!!!!!!!!!error pkix!!!!!!!!!!!!!!1111" + e)
+        dataDF = spark.read.format("csv").option("sep", ";").option("header", "true").load(resource_csv)
+      }
     }
-    if (dfName == Constants.TRANSPDFNAME) {
-      dataDF = CreateRDDUtil.createDFTranspESP(records)
-      index = Constants.TRANSPESPINDEX
-      return (dataDF,index)
-    }
-    if (dfName == Constants.MUERTESPNAME) {
-      dataDF = CreateRDDUtil.createDFMuertesESP(records)
-      index = Constants.MUERTESPINDEX
-      return (dataDF,index)
-    }
-    return (dataDF,index)
+    dataDF.show(20,false)
+    dataDF
+
+
+
+
+
+
+//    if (dfName == Constants.TIPOTURISMODFNAME) {
+//      dataDF = CreateRDDUtil.createDFTipoHotelESP(records)
+//      return (dataDF,index)
+//    }
+//    if (dfName == Constants.TRANSPDFNAME) {
+//      dataDF = CreateRDDUtil.createDFTranspESP(records)
+//      index = Constants.TRANSPESPINDEX
+//      return (dataDF,index)
+//    }
+//    if (dfName == Constants.MUERTESPNAME) {
+//      dataDF = CreateRDDUtil.createDFMuertesESP(records)
+//      index = Constants.MUERTESPINDEX
+//      return (dataDF,index)
+//    }
 
   }
 }

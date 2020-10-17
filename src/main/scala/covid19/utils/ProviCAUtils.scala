@@ -9,6 +9,6 @@ object ProviCAUtils {
   val provDF: DataFrame = spark.read.format("csv").option("sep", ";").option("header", "true").load("src/main/resources/relacion_ccaa_prov.csv")
   val CADF: DataFrame = spark.read.format("csv").option("sep", ";").option("header", "true").load("src/main/resources/relacion_iso_ccaa.csv")
 
-  val provCADF: DataFrame = provDF.join(CADF, "iso_ccaa")//.filter(col("provincia") contains "Valencia")
-
+  val provCADF: DataFrame = provDF.join(CADF, "iso_ccaa").filter(col("provincia") contains "Valencia")
+  //provCADF.show(20,false)
 }
