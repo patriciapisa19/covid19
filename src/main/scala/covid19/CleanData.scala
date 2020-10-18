@@ -9,15 +9,15 @@ import covid19.utils.CreateRDDUtil.spark
 
 object CleanData {
 
-  def hotelesData (hotelesDF: DataFrame): DataFrame = {
-
-    val hotelesRDF = hotelesDF.withColumnRenamed("com_aut_prov","provincia")
-    convertProvincia(convertPeriodMes(hotelesRDF))
-     // .filter(col("provincia") contains  "Val")
-
-    //.show(20, false)
-
-  }
+//  def hotelesData (hotelesDF: DataFrame): DataFrame = {
+//
+//    val hotelesRDF = hotelesDF.withColumnRenamed("com_aut_prov","provincia")
+//    convertProvincia(convertPeriodMes(hotelesRDF))
+//     // .filter(col("provincia") contains  "Val")
+//
+//    //.show(20, false)
+//
+//  }
 
   def transporteData (transpsDF: DataFrame): DataFrame = {
     convertPeriodMes(transpsDF)
@@ -31,7 +31,7 @@ object CleanData {
       .when(col("tipo_estancia") contains "Campings", "Campings")
       .when(col("tipo_estancia") contains "Rural", "Turismo Rural")
       .when(col("tipo_estancia") contains "Apartamentos", "Apartamentos Turísticos"))
-      .filter(col("provincia") contains  "Val")
+      //.filter(col("provincia") contains  "Val")
       //.show(20, false)
   }
 

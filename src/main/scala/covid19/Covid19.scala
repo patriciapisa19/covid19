@@ -3,7 +3,6 @@ package covid19
 import java.io
 
 import covid19.constants.Constants._
-import covid19.constants.URLSources._
 import covid19.utils.{CreateRDDUtil, ProviCAUtils}
 import org.apache.spark.sql.DataFrame
 import org.elasticsearch.spark.sql._
@@ -23,13 +22,19 @@ object Covid19 extends App {
   val hotesEsp = ModelSource(HOTELURL, HOTELFNAME, HOTELESPINDEX, HOTELESESPCSV)
   val hotelesDF: DataFrame = ReadINESources.readINE(hotesEsp.url,hotesEsp.dfName, hotesEsp.resourceCSV) //read data
   hotelesDF.show(20,false)
-  writeES(hotelesDF, hotesEsp.index) //load data
+  val hotelesDF2: DataFrame = CleanData.tipoHotelData(hotelesDF)
+  hotelesDF2.filter(col("month") === "09").groupBy("month","provincia").count().show(100,false)
+
+  //writeES(hotelesDF, hotesEsp.index) //load data
 
   //Source: Muertes España
   val muertesEsp = ModelSource(MUERTESPURL, MUERTESPNAME, MUERTESPINDEX, MUERTESPCSV)
   val muertesDF: DataFrame = ReadINESources.readINE(muertesEsp.url,muertesEsp.dfName,muertesEsp.resourceCSV) //read data
   muertesDF.show(20,false)
-  writeES(muertesDF, muertesEsp.index) //load data
+  val muertesDF2: DataFrame = CleanData.muertesEspData(muertesDF)
+  muertesDF2.filter(col("month_id") === "09").groupBy("month_id","provincia").count().show(100,false)
+
+  //writeES(muertesDF, muertesEsp.index) //load data
 
 
 
@@ -37,7 +42,7 @@ object Covid19 extends App {
   val transporteEsp = ModelSource(TRANSPORTESPURL, TRANSPDFNAME, TRANSPESPINDEX, TRASPORTESPCSV)
   val transporteDF: DataFrame = ReadINESources.readINE(transporteEsp.url,transporteEsp.dfName,transporteEsp.resourceCSV) //read data
   transporteDF.show(20,false)
-  writeES(transporteDF, transporteEsp.index) //load data
+  //writeES(transporteDF, transporteEsp.index) //load data
 
 
 
