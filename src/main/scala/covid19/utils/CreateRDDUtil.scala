@@ -1,6 +1,5 @@
 package covid19.utils
 
-import covid19.ReadData
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
