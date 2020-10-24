@@ -5,24 +5,24 @@ object Constants {
   //constants source INE
 
   //URL
-  val HOTELURL = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/2941.csv?nocab=1"
-  val TRANSPORTESPURL = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
-  val MUERTESPURL = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/36166.csv"
-  val CASOSPROV = "http://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
+  val HOTELURL: String = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/2941.csv?nocab=1"
+  val TRANSPORTESPURL: String = "https://ine.es/jaxiT3/files/t/es/csv_bdsc/20239.csv?nocab=1"
+  val MUERTESPURL: String = "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/36166.csv"
+  val CASOSPROV: String = "http://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
 
 
   //Index
-  val HOTELESPINDEX: String = "hotel-esp"
-  val TRANSPESPINDEX: String = "transport-esp"
-  val MUERTESPINDEX = "muertes-esp"
+  val HOTELESPINDEX: String = "hotel_spain"
+  val TRANSPESPINDEX: String = "transport_spain"
+  val MUERTESPINDEX: String = "muertes_spain"
 
   // Dataframe Name
-  val HOTELFNAME = "tipohotel"
-  val TRANSPDFNAME = "transportesp"
-  val MUERTESPNAME = "muertesp"
+  val HOTELFNAME: String = "tipohotel"
+  val TRANSPDFNAME: String = "transportesp"
+  val MUERTESPNAME: String = "muertesp"
 
   //Location csv
-  val HOTELESESPCSV = "src/main/resources/hotelEsp.csv"
-  val MUERTESPCSV = "src/main/resources/muertesEsp.csv"
-  val TRASPORTESPCSV = "src/main/resources/transporteEsp.csv"
+  val HOTELESESPCSV: String = "src/main/resources/hotelEsp.csv"
+  val MUERTESPCSV: String = "src/main/resources/muertesEsp.csv"
+  val TRASPORTESPCSV: String = "src/main/resources/transporteEsp.csv"
 }

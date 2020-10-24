@@ -21,18 +21,21 @@ object Covid19 extends App {
   // Source: Hoteles España
   val hotesEsp = ModelSource(HOTELURL, HOTELFNAME, HOTELESPINDEX, HOTELESESPCSV)
   val hotelesDF: DataFrame = ReadINESources.readINE(hotesEsp.url,hotesEsp.dfName, hotesEsp.resourceCSV) //read data
-  hotelesDF.show(20,false)
+  //hotelesDF.show(20,false)
   val hotelesDF2: DataFrame = CleanData.tipoHotelData(hotelesDF)
-  hotelesDF2.filter(col("month") === "09").groupBy("month","provincia").count().show(100,false)
+  hotelesDF2.printSchema()
+  hotelesDF2.groupBy("ccaa").agg(count("total")).show(100,false)
+  //hotelesDF2.filter(col("month") === "09").show(100,false)
 
-  //writeES(hotelesDF, hotesEsp.index) //load data
+  //writeES(hotelesDF2, hotesEsp.index) //load data
 
   //Source: Muertes España
   val muertesEsp = ModelSource(MUERTESPURL, MUERTESPNAME, MUERTESPINDEX, MUERTESPCSV)
   val muertesDF: DataFrame = ReadINESources.readINE(muertesEsp.url,muertesEsp.dfName,muertesEsp.resourceCSV) //read data
-  muertesDF.show(20,false)
+  //muertesDF.show(20,false)
   val muertesDF2: DataFrame = CleanData.muertesEspData(muertesDF)
-  muertesDF2.filter(col("month_id") === "09").groupBy("month_id","provincia").count().show(100,false)
+  muertesDF2.printSchema()
+  muertesDF2.filter(col("month_id") === "09").show(100,false)
 
   //writeES(muertesDF, muertesEsp.index) //load data
 
@@ -41,8 +44,11 @@ object Covid19 extends App {
   //Source: Transporte España
   val transporteEsp = ModelSource(TRANSPORTESPURL, TRANSPDFNAME, TRANSPESPINDEX, TRASPORTESPCSV)
   val transporteDF: DataFrame = ReadINESources.readINE(transporteEsp.url,transporteEsp.dfName,transporteEsp.resourceCSV) //read data
-  transporteDF.show(20,false)
-  //writeES(transporteDF, transporteEsp.index) //load data
+  //transporteDF.show(20,false)
+  val transporteDF2: DataFrame = CleanData.transporteData(transporteDF)
+  transporteDF2.printSchema()
+  //transporteDF2.filter(col("month") === "09").show(100,false)
+  writeES(transporteDF2, transporteEsp.index) //load data
 
 
 

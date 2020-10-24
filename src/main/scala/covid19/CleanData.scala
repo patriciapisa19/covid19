@@ -3,8 +3,10 @@ package covid19
 import covid19.utils.CaseClassesUtil.MuertesESP
 import org.apache.spark.sql.{Column, DataFrame}
 import org.apache.spark.sql.catalyst.expressions.{Expression, StringSplit}
-import org.apache.spark.sql.functions.{col, concat_ws, expr, length, lit, split, substring, when,trim,concat,to_date}
+import org.apache.spark.sql.functions.{col, concat, concat_ws, count, expr, length, lit, regexp_extract, regexp_replace, split, substring, to_date, trim, when}
 import covid19.utils.CreateRDDUtil.spark
+import org.apache.spark.sql.types.{FloatType, IntegerType}
+import covid19.utils.ProviCAUtils._
 
 
 object CleanData {
@@ -20,23 +22,33 @@ object CleanData {
 //  }
 
   def transporteData (transpsDF: DataFrame): DataFrame = {
-    convertPeriodMes(transpsDF)
-
+    dropPoint(convertPeriodMes(transpsDF),"total")
   }
 
   def tipoHotelData (tipoHotelDF: DataFrame): DataFrame = {
-    val tipoHotelRDF = tipoHotelDF.withColumnRenamed("com_aut_prov","provincia")
-    convertProvincia(convertPeriodMes(tipoHotelRDF))
-      .withColumn("tipo_estancia", when(col("tipo_estancia") contains "Hotelera", "Hoteles")
+
+    //convertPeriodMes(tipoHotelDF).groupBy("ccaa").count().show(50,false)
+    //nameCCAA(convertPeriodMes(tipoHotelDF),"ccaa").groupBy("ccaa").count().show(50,false)
+    //dropPoint(nameCCAA(convertPeriodMes(tipoHotelDF),"ccaa"),"total").groupBy("ccaa").count().show(50,false)
+
+    val dataDF = convertCCAA(tipoHotelDF).withColumn("tipo_estancia", when(col("tipo_estancia") contains "Hotelera", "Hoteles")
       .when(col("tipo_estancia") contains "Campings", "Campings")
       .when(col("tipo_estancia") contains "Rural", "Turismo Rural")
       .when(col("tipo_estancia") contains "Apartamentos", "Apartamentos Turísticos"))
-      //.filter(col("provincia") contains  "Val")
-      //.show(20, false)
+
+    //dataDF.groupBy("ccaa").count().show(50,false)
+    val hotelDF =  dropPoint(nameCCAA(convertPeriodMes(dataDF),"ccaa"),"total")
+
+    hotelDF.groupBy("ccaa").count().show(50,false)
+    val joinDF = hotelDF.join(CADF, "ccaa")
+
+
+    //joinDF.show(20,false)
+    joinDF
   }
 
   def muertesEspData (muertesESPDF: DataFrame): DataFrame = {
-    convertSemanaMes(convertProvincia(convertPeriodSemana(muertesESPDF)))
+    dropPoint(convertSemanaMes(convertProvincia(convertPeriodSemana(muertesESPDF))),"total")
       .withColumn("provincia",
         when(col("provincia") contains "Álava", "Álava")
         .when(col("provincia") contains "Alicante", "Alicante")
@@ -81,6 +93,24 @@ object CleanData {
 
   }
 
+  def convertCCAA(df: DataFrame) = {
+    df.withColumn("ccaa",
+      when(col("ccaa").startsWith("T"), "00 Total Nacional")
+        otherwise(col("ccaa")))
+      .withColumn("ccaa", expr("substring(ccaa,4,length(ccaa))"))
+      .withColumn("ccaaAux",
+        when(col("ccaa") contains(","), split(col("ccaa")," ")(0))
+          otherwise(""))
+      .withColumn("ccaaAux", expr("substring(ccaaAux, 1, (length(ccaaAux) - 1 ))"))
+      .withColumn("ccaa",
+        when(col("ccaa") contains ",", (split(col("ccaa"),", ")(1)))
+          otherwise(col("ccaa")))
+      .withColumn("ccaa", concat_ws(" ", col("ccaa"),col("ccaaAux")))
+      .withColumn("ccaa", trim(col("ccaa")))
+      .drop("ccaaAux")
+
+  }
+
   def convertPeriodMes(df: DataFrame) : DataFrame = {
     df.withColumn("periodo", split(col("periodo"),"M"))
       .withColumn("year",col("periodo")(0))
@@ -100,6 +130,46 @@ object CleanData {
     val semanaMesDF = spark.read.format("csv").option("sep", ";").option("header", "true").load("src/main/resources/relacion_semanas_meses.csv")
     //semanaMesDF.filter(col("year") === "2020").show(100, false)
     df.join(semanaMesDF,Seq("year","week"))
+  }
+
+  def dropPoint (df: DataFrame, nameColumn: String): DataFrame = {
+//    df.withColumn("newColumn", regexp_replace(df(nameColumn), "(\\.)", "").cast(IntegerType))
+//      .drop(nameColumn).withColumnRenamed("newColumn",nameColumn)
+//      .withColumn("newColumn", regexp_replace(df(nameColumn), "(\\,)", ".").cast(FloatType))
+//      .drop(nameColumn).withColumnRenamed("newColumn",nameColumn)
+
+    df.withColumn(nameColumn, when(col(nameColumn) rlike  "(\\.)", regexp_replace(df(nameColumn), "(\\.)", ""))
+      .when(col(nameColumn) rlike  "(\\,)", regexp_replace(df(nameColumn), "(\\,)", "."))
+      .otherwise(col(nameColumn)).cast(FloatType))
+
+  }
+
+  def nameProvincias (df: DataFrame, columnLocation: String): DataFrame = {
+    df.withColumn(columnLocation,
+      when(col(columnLocation) contains "Álava", "Álava")
+        .when(col(columnLocation) contains "Alicante", "Alicante")
+        .when(col(columnLocation) contains "Balear", "Palma de Mallorca")
+        .when(col(columnLocation) contains "Coruña", "La Coruña")
+        .when(col(columnLocation) contains "Castellón", "Castellón")
+        .when(col(columnLocation) contains "Gipuzkoa", "Guipúzcoa")
+        .when(col(columnLocation) === "Lleida", "Lérida")
+        .when(col(columnLocation) contains "Valencia", "Valencia")
+        .when(col(columnLocation) === "Bizkaia", "Vizcaya")
+        .when(col(columnLocation) === "Asturias", "Oviedo")
+        .when(col(columnLocation) === "Cantabria", "Santander")
+        .when(col(columnLocation) contains "Rioja", "Logroño")
+        .when(col(columnLocation) === "Ourense", "Orense")
+        .when(col(columnLocation) === "Girona", "Gerona")
+        .otherwise(col(columnLocation)))
+  }
+
+  def nameCCAA (df: DataFrame, columnLocation: String) : DataFrame = {
+    df.withColumn(columnLocation,
+        when(col(columnLocation) contains "Mancha", "Castilla-La Mancha")
+        .when(col(columnLocation) contains "Navarra", "Comunidad Foral Navarra")
+        .when(col(columnLocation) contains "Balear", "Islas Baleares")
+        .when(col(columnLocation) contains "Valenciana", "Comunidad Valenciana")
+        .otherwise(col(columnLocation)))
   }
 
 }
