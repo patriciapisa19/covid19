@@ -74,6 +74,12 @@ object CleanData {
 
   }
 
+  def casosEsp (casosESPDF: DataFrame): DataFrame = {
+    val joinProvincias: DataFrame = casosESPDF.join(provDF, casosESPDF("provincia_iso") === provDF("iso_prov")).drop("provincia_iso")
+    convertDate(joinProvincias.join(CADF,"iso_ccaa"))
+
+
+  }
 
   def convertProvincia(df: DataFrame) = {
     df.withColumn("provincia",
@@ -124,6 +130,15 @@ object CleanData {
       .withColumn("year",col("periodo")(0))
       .withColumn("week",col("periodo")(1))
       .drop("periodo")
+  }
+
+  def convertDate(df: DataFrame) : DataFrame = {
+    df.withColumn("fecha", split(col("fecha"),"-"))
+      .withColumn("year",col("fecha")(0))
+      .withColumn("month",col("fecha")(1))
+      .withColumn("day",col("fecha")(2).cast(IntegerType))
+      .drop("fecha")
+
   }
 
   def convertSemanaMes (df: DataFrame) = {

@@ -48,7 +48,16 @@ object Covid19 extends App {
   val transporteDF2: DataFrame = CleanData.transporteData(transporteDF)
   transporteDF2.printSchema()
   //transporteDF2.filter(col("month") === "09").show(100,false)
-  writeES(transporteDF2, transporteEsp.index) //load data
+  //writeES(transporteDF2, transporteEsp.index) //load data
+
+  // Source: Casos España
+  val casosEsp = ModelSource(CASOSESPURL, CASOSESPNAME, CASOSESPINDEX, CASOSESPCSV)
+  val casosDF: DataFrame = ReadINESources.readINE(casosEsp.url,casosEsp.dfName, casosEsp.resourceCSV) //read data
+  casosDF.show(100,false)
+  val casosDF2 = CleanData.casosEsp(casosDF)
+  //casosDF2.show(20, false)
+  writeES(casosDF2, casosEsp.index) //load data
+
 
 
 

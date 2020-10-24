@@ -11,5 +11,8 @@ object CaseClassesUtil{
 
   case class MuertesESP (provincia: String, sexo: String, edad: String, tipo_dato:String, periodo: String, total: Int)
 
+  case class CasosESP (provincia_iso: String, fecha: String, num_casos: Int, num_casos_prueba_pcr: Int,
+                               num_casos_prueba_test_ac: Int, num_casos_prueba_otras: Int, num_casos_prueba_desconocida: Int)
+
 
 }

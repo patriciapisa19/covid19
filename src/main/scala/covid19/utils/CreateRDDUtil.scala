@@ -1,5 +1,6 @@
 package covid19.utils
 
+import covid19.utils.CaseClassesUtil._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -60,6 +61,19 @@ object CreateRDDUtil {
           Try(register(5).toInt).getOrElse(0)
         ))
       spark.sqlContext.createDataFrame(recordsRDD)
+  }
+
+  def createDFCasosESP(records: List[List[String]]): DataFrame = {
+    val recordsRDD: RDD[CasosESP] = spark.sparkContext.parallelize(records) //se convierte en RDD
+      .map(register => CasosESP(
+        Try(register.head).getOrElse("null"),
+        Try(register(1)).getOrElse("null"),
+        Try(register(2).toInt).getOrElse(0),
+        Try(register(3).toInt).getOrElse(0),
+        Try(register(4).toInt).getOrElse(0),
+        Try(register(5).toInt).getOrElse(0),
+        Try(register(6).toInt).getOrElse(0)))
+    spark.sqlContext.createDataFrame(recordsRDD)
   }
 
 
