@@ -76,6 +76,55 @@ object CreateRDDUtil {
     spark.sqlContext.createDataFrame(recordsRDD)
   }
 
+  //Our World In Data
 
+  def createDFCasosMund(records: List[List[String]]): DataFrame = {
+    val recordsRDD: RDD[CasosMund] = spark.sparkContext.parallelize(records) //se convierte en RDD
+      .map(register => CasosMund(
+        Try(register.head).getOrElse("null"),
+        Try(register(1)).getOrElse("null"),
+        Try(register(2)).getOrElse("null"),
+        Try(register(3)).getOrElse("null"),
+        Try(register(4)).getOrElse("null"), Try(register(5)).getOrElse("null"),
+        Try(register(6)).getOrElse("null"), Try(register(7)).getOrElse("null"),
+        Try(register(8)).getOrElse("null"), Try(register(9)).getOrElse("null"),
+        Try(register(10)).getOrElse("null"), Try(register(11)).getOrElse("null"),
+        Try(register(12)).getOrElse("null"), Try(register(13)).getOrElse("null"),
+        Try(register(14)).getOrElse("null"), Try(register(15)).getOrElse("null"),
+        Try(register(16)).getOrElse("null"), Try(register(17)).getOrElse("null"),
+        Try(register(18)).getOrElse("null"), Try(register(19)).getOrElse("null"),
+        Try(register(20)).getOrElse("null"), Try(register(21)).getOrElse("null"),
+        Try(register(22)).getOrElse("null"), Try(register(23)).getOrElse("null"),
+        Try(register(24)).getOrElse("null"), Try(register(25)).getOrElse("null"),
+        Try(register(26)).getOrElse("null"), Try(register(27)).getOrElse("null"),
+        Try(register(28)).getOrElse("null"), Try(register(29)).getOrElse("null"),
+        Try(register(30)).getOrElse("null"), Try(register(31)).getOrElse("null"),
+        Try(register(32)).getOrElse("null"), Try(register(33)).getOrElse("null"),
+        Try(register(34)).getOrElse("null"), Try(register(35)).getOrElse("null"),
+        Try(register(36)).getOrElse("null"), Try(register(37)).getOrElse("null"),
+        Try(register(38)).getOrElse("null"), Try(register(39)).getOrElse("null"),
+        Try(register(40)).getOrElse("null")))
+    spark.sqlContext.createDataFrame(recordsRDD)
+  }
+
+  def createDFMovilidadMund(records: List[List[String]]): DataFrame = {
+    val recordsRDD: RDD[MovilidadMund] = spark.sparkContext.parallelize(records) //se convierte en RDD
+      .map(register => MovilidadMund(
+        Try(register.head).getOrElse("null"),
+        Try(register(1)).getOrElse("null"),
+        Try(register(2)).getOrElse("null"),
+        Try(register(3)).getOrElse("null"),
+        Try(register(4)).getOrElse("null"),
+        Try(register(5)).getOrElse("null"),
+        Try(register(6)).getOrElse("null"),
+        Try(register(7)).getOrElse("null"),
+        Try(register(8).toInt).getOrElse(0),
+        Try(register(9).toInt).getOrElse(0),
+        Try(register(10).toInt).getOrElse(0),
+        Try(register(11).toInt).getOrElse(0),
+        Try(register(12).toInt).getOrElse(0),
+        Try(register(13).toInt).getOrElse(0)))
+    spark.sqlContext.createDataFrame(recordsRDD)
+  }
 
 }

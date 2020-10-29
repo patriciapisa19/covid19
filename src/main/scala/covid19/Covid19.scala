@@ -8,7 +8,7 @@ import org.apache.spark.sql.DataFrame
 import org.elasticsearch.spark.sql._
 import covid19.model
 import covid19.model._
-import covid19.reader.ReadINESources
+import covid19.reader._
 import covid19.utils.CreateRDDUtil._
 import writer.WriteElastic._
 
@@ -18,11 +18,25 @@ import org.apache.spark.sql.functions._
 
 object Covid19 extends App {
 
+
+//  //Source: Casos Mundiales
+//  val casosMundiales = ModelSource(DATOSMUNDIALESURL, CASOSMUNDFNAME, CASOSMUNDINDEX, CASOSMUNDCSV)
+//  val casosMundDF: DataFrame = ReadOWIDSources.readOWID(casosMundiales.url,casosMundiales.dfName, casosMundiales.resourceCSV) //read data
+//  val casosMundDF2 = CleanDataOWID.casosMundiales(casosMundDF)
+
+//
+  //Source: Movilidad Mundial
+  val movilidadMundiales = ModelSource(MOVILIDADURL, MOVILIDADDFNAME, MOVILIDADINDEX, MOVILIDADCSV)
+  val movilidadMundDF: DataFrame = ReadOWIDSources.readOWID(movilidadMundiales.url,movilidadMundiales.dfName, movilidadMundiales.resourceCSV) //read data
+  val movilidadMundDF2 = CleanDataOWID.casosMundiales(movilidadMundDF)
+
+
+
   // Source: Hoteles España
   val hotesEsp = ModelSource(HOTELURL, HOTELFNAME, HOTELESPINDEX, HOTELESESPCSV)
   val hotelesDF: DataFrame = ReadINESources.readINE(hotesEsp.url,hotesEsp.dfName, hotesEsp.resourceCSV) //read data
   //hotelesDF.show(20,false)
-  val hotelesDF2: DataFrame = CleanData.tipoHotelData(hotelesDF)
+  val hotelesDF2: DataFrame = CleanDataINE.tipoHotelData(hotelesDF)
   hotelesDF2.printSchema()
   hotelesDF2.groupBy("ccaa").agg(count("total")).show(100,false)
   //hotelesDF2.filter(col("month") === "09").show(100,false)
@@ -33,7 +47,7 @@ object Covid19 extends App {
   val muertesEsp = ModelSource(MUERTESPURL, MUERTESPNAME, MUERTESPINDEX, MUERTESPCSV)
   val muertesDF: DataFrame = ReadINESources.readINE(muertesEsp.url,muertesEsp.dfName,muertesEsp.resourceCSV) //read data
   //muertesDF.show(20,false)
-  val muertesDF2: DataFrame = CleanData.muertesEspData(muertesDF)
+  val muertesDF2: DataFrame = CleanDataINE.muertesEspData(muertesDF)
   muertesDF2.printSchema()
   muertesDF2.filter(col("month_id") === "09").show(100,false)
 
@@ -45,7 +59,7 @@ object Covid19 extends App {
   val transporteEsp = ModelSource(TRANSPORTESPURL, TRANSPDFNAME, TRANSPESPINDEX, TRASPORTESPCSV)
   val transporteDF: DataFrame = ReadINESources.readINE(transporteEsp.url,transporteEsp.dfName,transporteEsp.resourceCSV) //read data
   //transporteDF.show(20,false)
-  val transporteDF2: DataFrame = CleanData.transporteData(transporteDF)
+  val transporteDF2: DataFrame = CleanDataINE.transporteData(transporteDF)
   transporteDF2.printSchema()
   //transporteDF2.filter(col("month") === "09").show(100,false)
   //writeES(transporteDF2, transporteEsp.index) //load data
@@ -54,9 +68,9 @@ object Covid19 extends App {
   val casosEsp = ModelSource(CASOSESPURL, CASOSESPNAME, CASOSESPINDEX, CASOSESPCSV)
   val casosDF: DataFrame = ReadINESources.readINE(casosEsp.url,casosEsp.dfName, casosEsp.resourceCSV) //read data
   casosDF.show(100,false)
-  val casosDF2 = CleanData.casosEsp(casosDF)
+  val casosDF2 = CleanDataINE.casosEsp(casosDF)
   //casosDF2.show(20, false)
-  writeES(casosDF2, casosEsp.index) //load data
+  //writeES(casosDF2, casosEsp.index) //load data
 
 
 

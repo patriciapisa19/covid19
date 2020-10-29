@@ -11,7 +11,6 @@ object Constants {
   val CASOSESPURL: String = "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv"
 
 
-
   //Index
   val HOTELESPINDEX: String = "hotel_spain"
   val TRANSPESPINDEX: String = "transport_spain"
@@ -30,4 +29,23 @@ object Constants {
   val MUERTESPCSV: String = "src/main/resources/muertesEsp.csv"
   val TRASPORTESPCSV: String = "src/main/resources/transporteEsp.csv"
   val CASOSESPCSV: String = "src/main/resources/casosEsp.csv"
+
+
+  //constants source our world in data
+
+  //URL
+  val DATOSMUNDIALESURL = "https://covid.ourworldindata.org/data/owid-covid-data.csv" //datos mundiales
+  val MOVILIDADURL = "https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv" //datos movilidad
+  //Index
+  val CASOSMUNDINDEX = "casos_mundiales"
+  val MOVILIDADINDEX = "movilidad_mundial"
+  // Dataframe Name
+  val CASOSMUNDFNAME = "casosmund"
+  val MOVILIDADDFNAME = "movilidadmund"
+  //Location csv
+  val CASOSMUNDCSV = "src/main/resources/casosMund.csv"
+  val MOVILIDADCSV = "src/main/resources/movilidadMund.csv"
+
+
+
 }

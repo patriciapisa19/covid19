@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.{FloatType, IntegerType}
 import covid19.utils.ProviCAUtils._
 
 
-object CleanData {
+object CleanDataINE {
 
 //  def hotelesData (hotelesDF: DataFrame): DataFrame = {
 //
