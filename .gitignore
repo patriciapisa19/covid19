@@ -30,5 +30,3 @@ build
 
 #general
 *.class
-
-src/main/resources/movilidadMund.csv

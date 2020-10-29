@@ -26,7 +26,7 @@ object Covid19 extends App {
 
 //
   //Source: Movilidad Mundial
-  val movilidadMundiales = ModelSource(MOVILIDADURL, MOVILIDADDFNAME, MOVILIDADINDEX, MOVILIDADCSV)
+  val movilidadMundiales = ModelSource(MOVILIDADURL, MOVILIDADDFNAME, MOVILIDADINDEX, MOVILIDADCSV1)
   val movilidadMundDF: DataFrame = ReadOWIDSources.readOWID(movilidadMundiales.url,movilidadMundiales.dfName, movilidadMundiales.resourceCSV) //read data
   val movilidadMundDF2 = CleanDataOWID.casosMundiales(movilidadMundDF)
 

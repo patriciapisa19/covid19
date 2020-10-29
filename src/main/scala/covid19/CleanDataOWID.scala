@@ -20,16 +20,22 @@ object CleanDataOWID {
     casosDateDF
   }
 
-
-
-
-
-  def transporteData (transpsDF: DataFrame): DataFrame = {
-    dropPoint(convertPeriodMes(transpsDF),"total")
+  def movilidadMund (movilidadDF : DataFrame) : DataFrame = {
+    val casosDateDF = convertDate(movilidadDF)
+    casosDateDF.show(20, false)
+    casosDateDF
   }
 
 
 
+  def convertDate(df: DataFrame) : DataFrame = {
+    df.withColumn("date", split(col("date"),"-"))
+      .withColumn("year",col("date")(0))
+      .withColumn("month",col("date")(1))
+      .withColumn("day",col("date")(2).cast(IntegerType))
+      .drop("date")
+
+  }
 
 
   def convertPeriodMes(df: DataFrame) : DataFrame = {
@@ -47,14 +53,7 @@ object CleanDataOWID {
       .drop("periodo")
   }
 
-  def convertDate(df: DataFrame) : DataFrame = {
-    df.withColumn("date", split(col("date"),"-"))
-      .withColumn("year",col("date")(0))
-      .withColumn("month",col("date")(1))
-      .withColumn("day",col("date")(2).cast(IntegerType))
-      .drop("date")
 
-  }
 
 
 

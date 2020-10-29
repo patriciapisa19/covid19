@@ -44,7 +44,8 @@ object Constants {
   val MOVILIDADDFNAME = "movilidadmund"
   //Location csv
   val CASOSMUNDCSV = "src/main/resources/casosMund.csv"
-  val MOVILIDADCSV = "src/main/resources/movilidadMund.csv"
+  val MOVILIDADCSV1 = "src/main/resources/movilidadMund1.csv"
+  val MOVILIDADCSV2 = "src/main/resources/movilidadMund2.csv"
 
 
 

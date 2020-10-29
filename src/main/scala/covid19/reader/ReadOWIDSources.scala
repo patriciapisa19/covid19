@@ -12,9 +12,13 @@ object ReadOWIDSources {
 
     var dataDF: DataFrame = null
 
-    if (dfName == MOVILIDADDFNAME){
-    dataDF = spark.read.format("csv").option("sep", ",").option("header", "true").load(resource_csv)
-    dataDF.groupBy().count().show(20, false)
+    if (dfName == MOVILIDADDFNAME) {
+      val dataDF1 = spark.read.format("csv").option("sep", ",").option("header", "true").load(MOVILIDADCSV1)
+      val dataDF2 = spark.read.format("csv").option("sep", ",").option("header", "true").load(MOVILIDADCSV2)
+      dataDF = dataDF1.union(dataDF2)
+      dataDF.show(20, false)
+
+    }
 
     if (dfName == CASOSMUNDFNAME){
       try {
@@ -31,10 +35,6 @@ object ReadOWIDSources {
       }
 
     }
-
-
-    }
-
     dataDF
 
 
