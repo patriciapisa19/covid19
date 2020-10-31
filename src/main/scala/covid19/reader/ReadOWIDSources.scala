@@ -20,17 +20,25 @@ object ReadOWIDSources {
 
     }
 
+    if (dfName == TRAFICOAEREONAME) {
+      dataDF = spark.read.format("csv").option("sep", ",").option("header", "true").load(TRAFICOAEREOINTCSV)
+      dataDF.show(20, false)
+
+    }
+
     if (dfName == CASOSMUNDFNAME){
       try {
         val html: List[String] = scala.io.Source.fromURL (URL).mkString.split ("\n").toList
         val records: List[List[String]] = html.drop(1).map(fieldName => StringUtils.normalizeString(fieldName)).map(x => x.split(",").toList)
-        //dataDF = createDFCasosMund(records)
+        dataDF = createDFCasosMund(records)
+        dataDF.printSchema()
+        dataDF.show(300,false)
         }
       catch {
         case e: SSLHandshakeException => {
           println ("!!!!!!!!!!!!!!!!!!!!!!error pkix!!!!!!!!!!!!!!1111" + e)
           dataDF = spark.read.format ("csv").option ("sep", ",").option ("header", "true").load (resource_csv)
-          //dataDF.show (20, false)
+          dataDF.show (200, false)
         }
       }
 

@@ -39,13 +39,16 @@ object Constants {
   //Index
   val CASOSMUNDINDEX = "casos_mundiales"
   val MOVILIDADINDEX = "movilidad_mundial"
+  val TRAFICOAEREOINDEX = "trafico_aereo_int"
   // Dataframe Name
   val CASOSMUNDFNAME = "casosmund"
   val MOVILIDADDFNAME = "movilidadmund"
+  val TRAFICOAEREONAME = "trafAereoIntDF"
   //Location csv
   val CASOSMUNDCSV = "src/main/resources/casosMund.csv"
   val MOVILIDADCSV1 = "src/main/resources/movilidadMund1.csv"
   val MOVILIDADCSV2 = "src/main/resources/movilidadMund2.csv"
+  val TRAFICOAEREOINTCSV = "src/main/resources/trafico_aereo_internacional.csv"
 
 
 
