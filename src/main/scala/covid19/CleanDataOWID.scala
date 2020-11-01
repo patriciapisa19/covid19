@@ -2,9 +2,11 @@ package covid19
 
 import covid19.utils.ContinentUtils._
 import covid19.utils.CreateRDDUtil.spark
+import covid19.utils.PaisUtils
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{FloatType, IntegerType}
+import covid19.utils.PaisUtils._
 
 object CleanDataOWID {
 
@@ -103,8 +105,12 @@ object CleanDataOWID {
         . when(col("tra_meas") === "PAS_CRD_DEP", "Passengers carried (departures)")
     )
 
-    traficoDF.show(200,false)
-    traficoDF.groupBy("geo_time").count().show(100,false)
+     traficoDF.show(200,false)
+    traficoDF.groupBy("geo_time").count().show(500,false)
+
+    val traficoFinalDF : DataFrame = traficoDF.join(paisDF, traficoDF("geo_time") === paisDF("codigo_pais_iso"))
+    traficoFinalDF.show(100,false)
+    traficoFinalDF.groupBy("geo_time","pais").count().show(500)
 
     traficoDF
   }
