@@ -107,12 +107,42 @@ object CleanDataOWID {
 
      traficoDF.show(200,false)
     traficoDF.groupBy("geo_time").count().show(500,false)
+    val traficoIntDF = traficoDF
+      .withColumn("2020Q3", col("2020Q3").cast(FloatType))
+      .withColumn("2020Q2", col("2020Q2").cast(FloatType))
+      .withColumn("2020Q1", col("2020Q1").cast(FloatType))
+      .withColumn("2020M09", col("2020M09").cast(FloatType))
+      .withColumn("2020M08", col("2020M08").cast(FloatType))
+      .withColumn("2020M07", col("2020M07").cast(FloatType))
+      .withColumn("2020M06", col("2020M06").cast(FloatType))
+      .withColumn("2020M05", col("2020M05").cast(FloatType))
+      .withColumn("2020M04", col("2020M04").cast(FloatType))
+      .withColumn("2020M03", col("2020M03").cast(FloatType))
+      .withColumn("2020M02", col("2020M02").cast(FloatType))
+      .withColumn("2020M01", col("2020M01").cast(FloatType))
+      .withColumn("2019Q4", col("2019Q4").cast(FloatType))
+      .withColumn("2019Q3", col("2019Q3").cast(FloatType))
+      .withColumn("2019Q2", col("2019Q2").cast(FloatType))
+      .withColumn("2019Q1", col("2019Q1").cast(FloatType))
+      .withColumn("2019M12", col("2019M12").cast(FloatType))
+      .withColumn("2019M11", col("2019M11").cast(FloatType))
+      .withColumn("2019M10", col("2019M10").cast(FloatType))
+      .withColumn("2019M09", col("2019M09").cast(FloatType))
+      .withColumn("2019M08", col("2019M08").cast(FloatType))
+      .withColumn("2019M07", col("2019M07").cast(FloatType))
+      .withColumn("2019M06", col("2019M06").cast(FloatType))
+      .withColumn("2019M05", col("2019M05").cast(FloatType))
+      .withColumn("2019M04", col("2019M04").cast(FloatType))
+      .withColumn("2019M03", col("2019M03").cast(FloatType))
+      .withColumn("2019M02", col("2019M02").cast(FloatType))
+      .withColumn("2019M01", col("2019M01").cast(FloatType))
 
-    val traficoFinalDF : DataFrame = traficoDF.join(paisDF, traficoDF("geo_time") === paisDF("codigo_pais_iso"))
-    traficoFinalDF.show(100,false)
-    traficoFinalDF.groupBy("geo_time","pais").count().show(500)
+    traficoIntDF.printSchema()
 
-    traficoDF
+    val traficoFinalDF: DataFrame = traficoIntDF.join(paisDF, traficoIntDF("geo_time") === paisDF("codigo_pais_iso")).drop("geo_time")
+    //traficoFinalDF.groupBy("geo_time","pais").count().show(500)
+    traficoFinalDF.printSchema()
+    traficoFinalDF
   }
 
 

@@ -8,6 +8,4 @@ object PaisUtils {
 
       val paisDF: DataFrame = spark.read.format("csv").option("sep", ";").option("header", "true").load("src/main/resources/relacion_iso_pais.csv")
 
-      paisDF.show(20,false)
-
 }
