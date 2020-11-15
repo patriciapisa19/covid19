@@ -1,98 +1,30 @@
-codigo_pais_iso;pais
-PY;Paraguay
-RU;Rusia
-YE;Yemen
-SN;Senegal
-SE;Suecia
-PH;Filipinas
-MY;Malasia
-SG;Singapur
-TR;Turquía
-IQ;Irak
-DE;Alemania
-AF;Afganistán
-FR;Francia
-GR;Grecia
-LK;Sri Lanka
-TW;Taiwán
-SK;Eslovaquia
-AR;Argentina
-AO;Angola
-BE;Bélgica
-EC;Ecuador
-QA;Qatar
-FI;Finlandia
-GH;Ghana
-NI;Nicaragua
-PE;Perú
-IN;India
-US;Estados Unidos
-MT;Malta
-CL;Chile
-PR;Puerto Rico
-HR;Croacia
-BO;Bolivia
-NG;Nigeria
-IT;Italia
-LT;Lituania
-NO;Nuruega
-ES;España
-DK;Dinamarca
-NG;Nigeria
-IE;Irlanda
-LA;Laos
-TH;Tailandia
-MA;Marruecos
-PA;Panamá
-CN;China
-UA;Ucrania
-VE;Venezuela
-IL;Israel
-KR;Corea del Sur
-UY;Uruguay
-MX;México
-EE;Estonia
-GE;Georgia
-ID;Indonesia
-BS;Las Bahamas
-GT;Guatemala
-MN;Mongolia
-LY;Libia
-HN;Honduras
-SA;Arabia Saudí
-UG;Uganda
-CH;Suiza
-JM;Jamaica
-LV;Letonia
-AE;Emiratos Árabes
-CA;Canadá
-MK;Macedonia del Norte
-MZ;Mozambique
-BR;Brasil
-KE;Kenia
-LB;Líbano
-SI;Eslovenia
-DO;República Dominicana
-JP;Japón
-LU;Luxemburgo
-HT;Haiti
-PL;Polonia
-PT;Portugal
-AU;Australia
-CM;Camerún
-RO;Rumanía
-BG;Bulgaria
-AT;Austria
-NP;Nepal
-CR;Costa Rica
-EG;Egipto
-SV;El Salvador
-RS;Serbia
-CO;Colombia
-HU;Hungría
-PK;Pakistan
-GB;Reino Unido
-MD;Moldavia
-VN;Vietnam
-NL;Países Bajos
-
+location;codigo_pais_iso
+Netherlands;NL
+Norway;NO
+Sweden;SE
+France;FR
+Croatia;HR
+Poland;PL
+Latvia;LV
+Germany;DE
+Estonia;EE
+Serbia;RS
+Spain;ES
+Slovakia;SK
+Luxemburgo;LU
+Belgium;BE
+Bulgaria;BG
+Turkey;TR
+Finland;FI
+Lithuania;LT
+Austria;AT
+Denmark;DK
+Romania;RO
+Hungary;HU
+North Macedonia;MK
+Malta;MT
+Ireland;IE
+Italy;IT
+Slovenia;SI
+Portugal;PT
+Switzerland;CH

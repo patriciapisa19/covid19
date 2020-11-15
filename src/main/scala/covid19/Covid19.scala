@@ -22,16 +22,20 @@ object Covid19 extends App {
   //Source: Trafico Aereo Internacional
   val traficoAereoInt = ModelSource("", TRAFICOAEREONAME, TRAFICOAEREOINDEX, TRAFICOAEREOINTCSV)
   val trafAereoIntDF: DataFrame = ReadOWIDSources.readOWID(traficoAereoInt.url,traficoAereoInt.dfName, traficoAereoInt.resourceCSV) //read data
-  trafAereoIntDF.printSchema()
+  //trafAereoIntDF.printSchema()
   val trafAereoIntDF2: DataFrame = CleanDataOWID.traficoAereoInternacional(trafAereoIntDF)
+  trafAereoIntDF2.printSchema()
+  //writeES(trafAereoIntDF2, "datos_mundiales_aereo")
+
 
   //Source: Casos Mundiales
   val casosMundiales = ModelSource(DATOSMUNDIALESURL, CASOSMUNDFNAME, CASOSMUNDINDEX, CASOSMUNDCSV)
   val casosMundDF: DataFrame = ReadOWIDSources.readOWID(casosMundiales.url,casosMundiales.dfName, casosMundiales.resourceCSV) //read data
   casosMundDF.show(20,false)
   val casosMundDF2 = CleanDataOWID.casosMundiales(casosMundDF)
-  casosMundDF2.groupBy("location").count().show(100,false)
+  //casosMundDF2.groupBy("location").count().show(100,false)
   casosMundDF2.printSchema()
+  //println(casosMundDF2.count())
   //writeES(casosMundDF2, casosMundiales.index) //load
   //writeES(casosMundDF2, "datos_mundiales_casos")
 
@@ -41,11 +45,11 @@ object Covid19 extends App {
   val movilidadMundDF: DataFrame = ReadOWIDSources.readOWID(movilidadMundiales.url,movilidadMundiales.dfName, movilidadMundiales.resourceCSV) //read data
   movilidadMundDF.printSchema()
   val movilidadMundDF2 = CleanDataOWID.movilidadMund(movilidadMundDF)
-  movilidadMundDF2.show(20,false)
+  //movilidadMundDF2.show(20,false)
   movilidadMundDF2.printSchema()
-
+  //println(movilidadMundDF2.count())
   //writeES(movilidadMundDF2, movilidadMundiales.index) //load data
-  writeES(movilidadMundDF2, "datos_mundiales_movilidad") //load data
+  //writeES(movilidadMundDF2, "datos_mundiales_movilidad") //load data
 
 
 

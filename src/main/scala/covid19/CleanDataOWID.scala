@@ -95,7 +95,7 @@ object CleanDataOWID {
   def traficoAereoInternacional(trafAereoDF: DataFrame): DataFrame ={
     val traficoDF = trafAereoDF.withColumn("tra_meas",
       when(col("tra_meas") === "PAS_BRD_DEP", "Passengers on board (departures)")
-        .when(col("tra_meas") === "PAS_BRD", "Passengers on board")
+        .when(col("tra_meas") === "PAS_BRD", "Pasajeros a bordo")
         . when(col("tra_meas") === "PAS_CRD_ARR", "Passengers carried (arrival)")
         . when(col("tra_meas") === "PAS_CRD", "Passengers carried")
         . when(col("tra_meas") === "CAF_PAS", "Commercial passenger air flights")
@@ -136,11 +136,13 @@ object CleanDataOWID {
       .withColumn("2019M03", col("2019M03").cast(FloatType))
       .withColumn("2019M02", col("2019M02").cast(FloatType))
       .withColumn("2019M01", col("2019M01").cast(FloatType))
+      .withColumn("date", lit("2020-11-01"))
 
     traficoIntDF.printSchema()
+    traficoIntDF.show(20)
 
     val traficoFinalDF: DataFrame = traficoIntDF.join(paisDF, traficoIntDF("geo_time") === paisDF("codigo_pais_iso")).drop("geo_time")
-    //traficoFinalDF.groupBy("geo_time","pais").count().show(500)
+    traficoFinalDF.show(5)
     traficoFinalDF.printSchema()
     traficoFinalDF
   }
