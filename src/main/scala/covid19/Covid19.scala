@@ -1,52 +1,158 @@
 package covid19
-import org.apache.spark.sql.{Row, SparkSession}
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+
+import java.io
+
+import covid19.constants.Constants._
+import covid19.utils.{CreateRDDUtil, ProviCAUtils}
+import org.apache.spark.sql.DataFrame
+import org.elasticsearch.spark.sql._
+import covid19.model
+import covid19.model._
+import covid19.reader._
+import covid19.utils.CreateRDDUtil._
+import writer.WriteElastic._
+
+import scala.collection.JavaConverters._
 import org.apache.spark.sql.functions._
-
-import scala.collection.immutable
-
 
 
 object Covid19 extends App {
 
-  //lECTURA DEL DATASET QUE ESTA EN ESTA RUTA
-  val url: String =  "https://ine.es/jaxiT3/files/t/es/csv_bdsc/2074.csv"
-  val html: List[String] = scala.io.Source.fromURL(url).mkString.split("\n").toList
 
-  val records: List[Row] = html.drop(1).map(fieldName => if(fieldName.contains("\r")) fieldName.dropRight(1) else fieldName)
-    .map(x => x.split(";").toList)
-    .map(x => Row(x:_*))
-
-  val headInit: List[String] = html(0).split(";").toList
-  val head = headInit.map(fieldName => if(fieldName.contains("\r")) fieldName.dropRight(1) else fieldName)
-  val headStruct: List[StructField] = head.map(fieldName => StructField(fieldName, StringType, nullable = true))
-
-  val spark = SparkSession
-    .builder()
-    .appName("Spark SQL basic example")
-    .master("local[*]")
-    .getOrCreate()
-
-  import spark.sqlContext.implicits._
-
-  val recordsRDD = spark.sparkContext.parallelize(records) //se convierte en RDD
-  val dataDF = spark.createDataFrame(recordsRDD, StructType(headStruct))
-  dataDF.show(20, truncate = false)
-  print(dataDF.count())
+  //Source: Trafico Aereo Internacional
+  val traficoAereoInt = ModelSource("", TRAFICOAEREONAME, TRAFICOAEREOINDEX, TRAFICOAEREOINTCSV)
+  val trafAereoIntDF: DataFrame = ReadOWIDSources.readOWID(traficoAereoInt.url,traficoAereoInt.dfName, traficoAereoInt.resourceCSV) //read data
+  //trafAereoIntDF.printSchema()
+  val trafAereoIntDF2: DataFrame = CleanDataOWID.traficoAereoInternacional(trafAereoIntDF)
+  trafAereoIntDF2.printSchema()
+  //writeES(trafAereoIntDF2, "datos_mundiales_aereo")
 
 
+  //Source: Casos Mundiales
+  val casosMundiales = ModelSource(DATOSMUNDIALESURL, CASOSMUNDFNAME, CASOSMUNDINDEX, CASOSMUNDCSV)
+  val casosMundDF: DataFrame = ReadOWIDSources.readOWID(casosMundiales.url,casosMundiales.dfName, casosMundiales.resourceCSV) //read data
+  casosMundDF.show(20,false)
+  val casosMundDF2 = CleanDataOWID.casosMundiales(casosMundDF)
+  //casosMundDF2.groupBy("location").count().show(100,false)
+  casosMundDF2.printSchema()
+  //println(casosMundDF2.count())
+  //writeES(casosMundDF2, casosMundiales.index) //load
+  //writeES(casosMundDF2, "datos_mundiales_casos")
+
+
+  //Source: Movilidad Mundial
+  val movilidadMundiales = ModelSource(MOVILIDADURL, MOVILIDADDFNAME, MOVILIDADINDEX, MOVILIDADCSV1)
+  val movilidadMundDF: DataFrame = ReadOWIDSources.readOWID(movilidadMundiales.url,movilidadMundiales.dfName, movilidadMundiales.resourceCSV) //read data
+  movilidadMundDF.printSchema()
+  val movilidadMundDF2 = CleanDataOWID.movilidadMund(movilidadMundDF)
+  //movilidadMundDF2.show(20,false)
+  movilidadMundDF2.printSchema()
+  //println(movilidadMundDF2.count())
+  //writeES(movilidadMundDF2, movilidadMundiales.index) //load data
+  //writeES(movilidadMundDF2, "datos_mundiales_movilidad") //load data
 
 
 
 
-  //  val array = Array.fill(2,2)("A")
+  // Source: Hoteles España
+  val hotesEsp = ModelSource(HOTELURL, HOTELFNAME, HOTELESPINDEX, HOTELESESPCSV)
+  val hotelesDF: DataFrame = ReadINESources.readINE(hotesEsp.url,hotesEsp.dfName, hotesEsp.resourceCSV) //read data
+  //hotelesDF.show(20,false)
+  val hotelesDF2: DataFrame = CleanDataINE.tipoHotelData(hotelesDF)
+  hotelesDF2.printSchema()
+  hotelesDF2.groupBy("ccaa").agg(count("total")).show(100,false)
+  //hotelesDF2.filter(col("month") === "09").show(100,false)
+
+  //writeES(hotelesDF2, hotesEsp.index) //load data
+
+  //Source: Muertes España
+  val muertesEsp = ModelSource(MUERTESPURL, MUERTESPNAME, MUERTESPINDEX, MUERTESPCSV)
+  val muertesDF: DataFrame = ReadINESources.readINE(muertesEsp.url,muertesEsp.dfName,muertesEsp.resourceCSV) //read data
+  //muertesDF.show(20,false)
+  val muertesDF2: DataFrame = CleanDataINE.muertesEspData(muertesDF)
+  muertesDF2.printSchema()
+  muertesDF2.filter(col("month_id") === "09").show(100,false)
+
+  //writeES(muertesDF, muertesEsp.index) //load data
+
+
+
+  //Source: Transporte España
+  val transporteEsp = ModelSource(TRANSPORTESPURL, TRANSPDFNAME, TRANSPESPINDEX, TRASPORTESPCSV)
+  val transporteDF: DataFrame = ReadINESources.readINE(transporteEsp.url,transporteEsp.dfName,transporteEsp.resourceCSV) //read data
+  //transporteDF.show(20,false)
+  val transporteDF2: DataFrame = CleanDataINE.transporteData(transporteDF)
+  transporteDF2.printSchema()
+  //transporteDF2.filter(col("month") === "09").show(100,false)
+  //writeES(transporteDF2, transporteEsp.index) //load data
+
+  // Source: Casos España
+  val casosEsp = ModelSource(CASOSESPURL, CASOSESPNAME, CASOSESPINDEX, CASOSESPCSV)
+  val casosDF: DataFrame = ReadINESources.readINE(casosEsp.url,casosEsp.dfName, casosEsp.resourceCSV) //read data
+  casosDF.show(100,false)
+  val casosDF2 = CleanDataINE.casosEsp(casosDF)
+  //casosDF2.show(20, false)
+  //writeES(casosDF2, casosEsp.index) //load data
+
+
+
+
+
+
+
+
+
+
+  //  val ineSourceData: List[(DataFrame, String)] = ReadData.readSource
+//  //ineSourceData.map(x => (x._1).saveToEs(x._2)) //escribir en elastic cada df
+//  //ineSourceData.map(x => x._1.show(20))
+//  val hotelesDF = ineSourceData.head._1
+//  val hotelIndex = ineSourceData.head._2
+//  val tansporteDF = ineSourceData(2)._1
+//  val transporteIndex = ineSourceData(2)._2
 //
-//  println(array.deep)
-//  println(array.deep.mkString("\n"))
+//  val hotelesCleanedDF = CleanData.hotelesData(hotelesDF)
+//  val transpCleanedDF = CleanData.transporteData(tansporteDF)
+//
+////  hotelesCleanedDF.show(20, false)
+////  transpCleanedDF.show(20, false)
+//
+//  val tipoHotelDF = ineSourceData(1)._1
+//  val tipoHotelIndex = ineSourceData(1)._2
+//  val tipohotelesCleanedDF = CleanData.tipoHotelData(tipoHotelDF)
+//
+////tipohotelesCleanedDF
+////    .filter(col("tipo_estancia") contains  "Cam")
+////    .filter(col("provincia") contains  "Astu")
+////    .filter(col("year") equalTo   "2020")
+////    .filter(col("month") equalTo "05")
+////    .show(20, false)
+//
+////  hotelesCleanedDF.saveToEs(hotelIndex)
+////  transpCleanedDF.saveToEs(transporteIndex)
+//
+//  val muertesESPDF = ineSourceData(3)._1
+//  muertesESPDF.show(50,false)
+//  val muertesESPIndex = ineSourceData(3)._2
+//
+//  val muertesDF: DataFrame = CleanData.muertesEspData(muertesESPDF)
+//  muertesDF.show(50, false)
+//
+//  val provCADF: DataFrame = ProviCAUtils.provCADF //codigos CA y provincias
+//  provCADF.show(50, false)
+//
+//
+//  val dfToElastic: DataFrame = muertesDF.join(provCADF,"provincia")
+//  dfToElastic.printSchema()
+//  dfToElastic.show(50, false)
+//
+//  //dfToElastic.groupBy("provincia").agg(sum("total"))show(2000, false)
+//  //dfToElastic.saveToEs("muertes_spain")
+//
 //
 
 
 
 
 
-}
+  }
